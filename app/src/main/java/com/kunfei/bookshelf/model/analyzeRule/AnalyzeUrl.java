@@ -79,6 +79,9 @@ public class AnalyzeUrl {
             if (rule.startsWith("<js>")) {
                 rule = rule.substring(4, rule.lastIndexOf("<"));
                 ruleUrl = (String) evalJS(rule, ruleUrl);
+            } else if (rule.startsWith("@js:")) {
+                rule = rule.substring(4);
+                ruleUrl = (String) evalJS(rule, ruleUrl);
             } else {
                 ruleUrl = rule.replace("@result", ruleUrl);
             }
@@ -255,6 +258,10 @@ public class AnalyzeUrl {
         SimpleBindings bindings = new SimpleBindings();
         bindings.put("result", result);
         return SCRIPT_ENGINE.eval(jsStr, bindings);
+    }
+
+    public String getCharCode() {
+        return charCode;
     }
 
     public String getHost() {
